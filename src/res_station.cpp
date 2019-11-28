@@ -25,6 +25,7 @@ void res_station::exec()
 {
     while(true)
     {
+        int fim;
         //Enquanto houver dependencia de valor em outra RS, espere
         while(qj || qk)
             wait(val_enc);
@@ -67,6 +68,12 @@ void res_station::exec()
                 rs = std::to_string((int)res);
             escrita_saida = std::to_string(id) + ' ' + rs;
             cout << "Instrucao " << op << " completada no ciclo " << sc_time_stamp() << " em " << name() << " com resultado " << res << endl << flush;
+            fim = sc_time_stamp().value();
+            //cout << "FIM VALE " << fim/1000 << endl << flush;
+            FILE* arquivo;
+            arquivo = fopen("arquivo.txt", "a");
+            fprintf(arquivo, "fim da instruçao em: %d\n", fim/1000);
+            fclose(arquivo);
             out->write(escrita_saida);
         }
         else
@@ -79,6 +86,12 @@ void res_station::exec()
             {
                 mem_req(false,a,vj);
                 cout << "Instrucao " << op << " completada no ciclo " << sc_time_stamp() << " em " << name() << " gravando na posicao de memoria " << a << " o resultado " << vj << endl << flush;
+                fim = sc_time_stamp().value();
+                //cout << "FIM VALE " << fim/1000 << endl << flush;
+                FILE* arquivo;
+                arquivo = fopen("arquivo.txt", "a");
+                fprintf(arquivo, "fim da instruçao em: %d\n", fim/1000);
+                fclose(arquivo);
             }
             isFirst = false;
             a = 0;

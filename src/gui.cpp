@@ -41,6 +41,7 @@ bool add_instructions(ifstream &File,vector<string> &queue, nana::listbox &instr
     }
     auto inst_gui_cat = instruction_gui.at(0);
     string line;
+    int cont = 0;
     while(getline(File,line))
     {
         if(line.rfind("//", 0) == string::npos) //ignora linhas que começam com "//"
@@ -48,7 +49,12 @@ bool add_instructions(ifstream &File,vector<string> &queue, nana::listbox &instr
             queue.push_back(line);
             inst_gui_cat.append(line);
         }
+        cont++;
     }
+    FILE* arquivo;
+    arquivo = fopen("arquivo.txt", "w+");
+    fprintf(arquivo, "quantidade de instruçoes: %d\n", cont);
+    fclose(arquivo);
     File.close();
     return true;
 }

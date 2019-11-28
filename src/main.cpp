@@ -95,6 +95,29 @@ int sc_main(int argc, char *argv[])
         }
     });
     // Menu de ajuste dos tempos de latencia na interface
+    
+    sub->append("Tempos de latência com arquivos", [&](menu::item_proxy &ip){ 
+        filebox fb(0,true);
+        inputbox ibox(fm,"Localização do arquivo");
+        inputbox::path caminho("",fb);
+        if(ibox.show_modal(caminho))
+        {
+            auto path = caminho.value();
+            cout << caminho.value() << endl;
+            inFile.open(path);
+            string inst;
+            int ciclos;
+            while(inFile >> inst >> ciclos){
+                instruct_time[inst] = ciclos;
+                cout << inst << ciclos << endl;
+            }
+                show_message("Arquivo lido","(ง'̀-'́)ง");
+                inFile.close();
+        }
+        else{
+           show_message("Arquivo inválido","Não foi possível abrir o arquivo!");
+        }
+    });
     // Novas instrucoes devem ser adcionadas manualmente aqui
     sub->append("Tempos de latência", [&](menu::item_proxy &ip)
     {
@@ -102,7 +125,7 @@ int sc_main(int argc, char *argv[])
         inputbox::text dadd_t("DADD",std::to_string(instruct_time["DADD"]));
         inputbox::text daddi_t("DADDI",std::to_string(instruct_time["DADDI"]));
         inputbox::text dsub_t("DSUB",std::to_string(instruct_time["DSUB"]));
-        inputbox::text dsubi_t("DSUBI",std::to_string(instruct_time["DSUBI"]));
+        inputbox::text dsubi_t("DSUBI",std::to_string(instruct_time["DSUBI"])); 
         inputbox::text dmul_t("DMUL",std::to_string(instruct_time["DMUL"]));
         inputbox::text ddiv_t("DDIV",std::to_string(instruct_time["DDIV"]));
         inputbox::text mem_t("Load/Store",std::to_string(instruct_time["MEM"]));
@@ -570,6 +593,23 @@ int sc_main(int argc, char *argv[])
     });
     exit.events().click([]
     {
+        FILE* arquivo;
+        arquivo = fopen("arquivo.txt", "r");
+        char insts[50];
+        double numinst;
+        double fciclo;
+        double CPI;
+        fscanf(arquivo, "%[^0-9]", insts);
+        fscanf(arquivo, "%lf", &numinst);
+        while(!feof(arquivo)){
+            fscanf(arquivo, "%[^0-9]", insts);
+            fscanf(arquivo, "%lf", &fciclo);
+        }
+        cout << "ciclos vale:" << fciclo << endl;
+        cout << "numero de instruçoes vale:" << numinst << endl;
+        CPI = fciclo/numinst;
+        cout << "CPI vale:" << CPI << endl;
+        fclose(arquivo);
         sc_stop();
         API::exit();
     });

@@ -1,0 +1,6 @@
+quantidade de instruçoes: 7
+fim da instruçao em: 9
+fim da instruçao em: 21
+fim da instruçao em: 26
+fim da instruçao em: 28
+fim da instruçao em: 39
