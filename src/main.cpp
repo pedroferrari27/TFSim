@@ -594,7 +594,7 @@ int sc_main(int argc, char *argv[])
     exit.events().click([]
     {
         FILE* arquivo;
-        arquivo = fopen("arquivo.txt", "r");
+        arquivo = fopen("arquivo.txt", "r+");
         char insts[50];
         double numinst;
         double fciclo;
@@ -609,6 +609,7 @@ int sc_main(int argc, char *argv[])
         cout << "numero de instruçoes vale:" << numinst << endl;
         CPI = fciclo/numinst;
         cout << "CPI vale:" << CPI << endl;
+        fprintf(arquivo, "ciclos vale: %lf\nnumero de instruçoes vale: %lf\nCPI vale: %lf", fciclo, numinst, CPI);
         fclose(arquivo);
         sc_stop();
         API::exit();

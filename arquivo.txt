@@ -4,3 +4,6 @@ fim da instruçao em: 21
 fim da instruçao em: 26
 fim da instruçao em: 28
 fim da instruçao em: 39
+ciclos vale: 39.000000
+numero de instruçoes vale: 7.000000
+CPI vale: 5.571429
